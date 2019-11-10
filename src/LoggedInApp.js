@@ -26,6 +26,7 @@ import Dashboard from './Dashboard/Dashboard';
 import Checkout from './Checkout/Checkout';
 import Orders from './Dashboard/Orders';
 import Pricing from './Pricing/Pricing';
+import PaperSheet, { SettingsSheet } from './PaperSheet/PaperSheet';
 
 const drawerWidth = 240;
 
@@ -180,7 +181,7 @@ function ResponsiveDrawer(props) {
           <div className={classes.toolbar} />
             <Switch>
               <Route exact path="/">
-                Home
+                <PaperSheet />
               </Route>
               <Route path="/analytics">
                 <Dashboard />
@@ -192,7 +193,7 @@ function ResponsiveDrawer(props) {
                 <Orders />
               </Route>
               <Route path="/settings">
-                Settings
+                <SettingsSheet />
               </Route>
               <Route path="/logout">
                 <Pricing />

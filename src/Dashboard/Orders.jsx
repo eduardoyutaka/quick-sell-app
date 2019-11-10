@@ -1,5 +1,5 @@
 /* eslint-disable no-script-url */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
+import axios from 'axios';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -30,34 +31,41 @@ const useStyles = makeStyles(theme => ({
 
 export default function Orders() {
   const classes = useStyles();
+  const [purchases, setPurchases] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:4000/purchases').then(response => {
+      setPurchases(response.data);
+    })
+  }, purchases);
+
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Vendas Recentes</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Gênero</TableCell>
+            <TableCell>Idade</TableCell>
+            <TableCell>Nome do Produto</TableCell>
+            <TableCell>Preço do Produto</TableCell>
+            <TableCell align="right">Data da Compra</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+          {purchases.map(purchase => (
+            <TableRow key={purchase.id}>
+              <TableCell>{purchase.customer_gender}</TableCell>
+              <TableCell>{purchase.customer_age}</TableCell>
+              <TableCell>{purchase.product_name}</TableCell>
+              <TableCell>{purchase.product_price}</TableCell>
+              <TableCell align="right">{purchase.created_at.split('T')[0]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="javascript:;">
-          See more orders
+          Ver detalhes
         </Link>
       </div>
     </React.Fragment>
