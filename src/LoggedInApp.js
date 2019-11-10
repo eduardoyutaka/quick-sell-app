@@ -23,6 +23,9 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import { Switch, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard/Dashboard';
+import Checkout from './Checkout/Checkout';
+import Orders from './Dashboard/Orders';
+import Pricing from './Pricing/Pricing';
 
 const drawerWidth = 240;
 
@@ -68,6 +71,11 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const logout = () => {
+    localStorage.removeItem('loggedIn');
+    window.location.href = '/';
+  }
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -106,7 +114,7 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="Configurações" />
           </ListItem>
         </Link>
-        <Link to="/notifications" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="/" onClick={logout} style={{ textDecoration: "none", color: "inherit" }}>
           <ListItem button key="Sair">
             <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
             <ListItemText primary="Sair" />
@@ -118,77 +126,81 @@ function ResponsiveDrawer(props) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Quick Sell
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-          <Switch>
-            <Route exact path="/">
-              Home
-            </Route>
-            <Route path="/analytics">
-              <Dashboard />
-            </Route>
-            <Route path="/purchases">
-              Vendas
-            </Route>
-            <Route path="/storage">
-              Storage
-            </Route>
-            <Route path="/settings">
-              Settings
-            </Route>
-            <Route path="/notifications">
-              Notifications
-            </Route>
-          </Switch>
-      </main>
+    {localStorage.getItem('loggedIn') &&
+      <React.Fragment>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              Quick Sell
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+            <Switch>
+              <Route exact path="/">
+                Home
+              </Route>
+              <Route path="/analytics">
+                <Dashboard />
+              </Route>
+              <Route path="/purchases">
+                <Checkout />
+              </Route>
+              <Route path="/storage">
+                <Orders />
+              </Route>
+              <Route path="/settings">
+                Settings
+              </Route>
+              <Route path="/logout">
+                <Pricing />
+              </Route>
+            </Switch>
+        </main>
+      </React.Fragment>
+    }
     </div>
   );
 }

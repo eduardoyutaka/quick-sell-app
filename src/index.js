@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import LoggedInApp from './LoggedInApp';
+import Pricing from './Pricing/Pricing';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+const App = () => localStorage.getItem('loggedIn') ? <LoggedInApp /> : <Pricing />;
 
 ReactDOM.render(
   <Router>
