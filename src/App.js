@@ -14,9 +14,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import StoreIcon from '@material-ui/icons/Store';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 import HomeIcon from '@material-ui/icons/Home';
-import PeopleIcon from '@material-ui/icons/People';
+import SettingsIcon from '@material-ui/icons/Settings';
 import PaymentIcon from '@material-ui/icons/Payment';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -101,15 +101,15 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         <Link to="/settings" style={{ textDecoration: "none", color: "inherit" }}>
-          <ListItem button key="Usuários">
-            <ListItemIcon><PeopleIcon /></ListItemIcon>
-            <ListItemText primary="Usuários" />
+          <ListItem button key="Configurações">
+            <ListItemIcon><SettingsIcon /></ListItemIcon>
+            <ListItemText primary="Configurações" />
           </ListItem>
         </Link>
         <Link to="/notifications" style={{ textDecoration: "none", color: "inherit" }}>
-          <ListItem button key="Notícias">
-            <ListItemIcon><NotificationsNoneIcon /></ListItemIcon>
-            <ListItemText primary="Notícias" />
+          <ListItem button key="Sair">
+            <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
+            <ListItemText primary="Sair" />
           </ListItem>
         </Link>
       </List>
